@@ -33,3 +33,18 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
+-- Chad Tree
+vim.keymap.set("n", "<leader>t", "<cmd>CHADopen<CR>")
+
+-- Vimspector
+
+vim.keymap.set("n", "<leader>dd", "<cmd>call vimspector#Launch()<CR>")
+vim.keymap.set("n", "<leader>dr", "<cmd>call vimspector#Reset()<CR>")
+vim.keymap.set("n", "<leader>dc", "<cmd>call vimspector#Continue()<CR>")
+vim.keymap.set("n", "<leader>db", "<cmd>call vimspector#ToggleBreakpoint()<CR>")
+vim.keymap.set("n", "<leader>dB", "<cmd>call vimspector#ClearBreakpoints()<CR>")
+
+vim.keymap.set("n", "<leader>dh", "<cmd>call vimspector#Restart()<CR>")
+vim.keymap.set("n", "<leader>dl", "<cmd>call vimspector#StepOut()<CR>")
+vim.keymap.set("n", "<leader>dj", "<cmd>call vimspector#StepInto()<CR>")
+vim.keymap.set("n", "<leader>dk", "<cmd>call vimspector#StepOver()<CR>")

@@ -43,4 +43,6 @@ use {
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
     use({ "catppuccin/nvim", as = "catppuccin" })
+    use('ms-jpq/chadtree', { branch = 'chad', run =  '!python3 -m chadtree deps'})
+    use('puremourning/vimspector', { run = "python3 install_gadget.py --all" })
 end)
