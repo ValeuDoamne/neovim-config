@@ -34,7 +34,7 @@ vim.keymap.set("n", "<leader><leader>", function()
 end)
 
 -- Chad Tree
-vim.keymap.set("n", "<leader>t", "<cmd>CHADopen<CR>")
+vim.keymap.set("n", "<leader>t", "<cmd>NvimTreeToggle<CR>")
 
 -- Vimspector
 

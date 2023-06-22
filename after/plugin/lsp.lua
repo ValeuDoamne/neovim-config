@@ -1,4 +1,30 @@
 local lsp = require("lsp-zero")
+local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
+-- Locally installed jedi-language-server for python completition to work globally
+
+lspconfig['jedi_language_server'].setup {
+    cmd = { '/usr/bin/jedi-language-server' },
+    filetypes = { "python" },
+}
+
+local root_files = {
+  'compile_commands.json',
+  '.ccls',
+}
+
+lspconfig.ccls.setup {
+  default_config = {
+    cmd = { '/usr/bin/ccls' },
+    filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+    root_dir = function(fname)
+      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+    end,
+    offset_encoding = 'utf-32',
+    -- ccls does not support sending a null root directory
+    single_file_support = false,
+  },
+}
 
 lsp.preset("recommended")
 
@@ -32,9 +58,9 @@ lsp.set_preferences({
     suggest_lsp_servers = false,
     sign_icons = {
         error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
+        warn  = 'W',
+        hint  = 'H',
+        info  = 'I'
     }
 })
 
@@ -48,6 +74,7 @@ lsp.on_attach(function(client, buffnr)
 	vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
 	vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
 	vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+	vim.keymap.set("n", "<leader>vrd", function() vim.lsp.buf.type_definition() end, opts)
 	vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)

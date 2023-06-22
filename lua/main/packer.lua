@@ -38,11 +38,16 @@ use {
 		{'L3MON4D3/LuaSnip'},     -- Required
 		}
 	}
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-    }
+    use({ 'nvim-tree/nvim-web-devicons'})
+    use({'nvim-lualine/lualine.nvim'})
+
+    use({"nvim-lua/lsp-status.nvim"})
     use({ "catppuccin/nvim", as = "catppuccin" })
-    use('ms-jpq/chadtree', { branch = 'chad', run =  '!python3 -m chadtree deps'})
-    use('puremourning/vimspector', { run = "python3 install_gadget.py --all" })
+    use({'nvim-tree/nvim-tree.lua', requires= {'nvim-tree/nvim-web-devicons'}})
+
+    -- use('puremourning/vimspector', { run = "python3 install_gadget.py --all" })
+    use({ "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} })
+
+    -- Rust
+    use('simrat39/rust-tools.nvim')
 end)
