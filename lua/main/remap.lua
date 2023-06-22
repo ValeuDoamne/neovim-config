@@ -33,11 +33,10 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
--- Chad Tree
+-- Nvim Tree
 vim.keymap.set("n", "<leader>t", "<cmd>NvimTreeToggle<CR>")
 
 -- Vimspector
-
 vim.keymap.set("n", "<leader>dd", "<cmd>call vimspector#Launch()<CR>")
 vim.keymap.set("n", "<leader>dr", "<cmd>call vimspector#Reset()<CR>")
 vim.keymap.set("n", "<leader>dc", "<cmd>call vimspector#Continue()<CR>")
