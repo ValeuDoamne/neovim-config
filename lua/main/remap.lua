@@ -1,6 +1,4 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
@@ -47,3 +45,4 @@ vim.keymap.set("n", "<leader>dh", "<cmd>call vimspector#Restart()<CR>")
 vim.keymap.set("n", "<leader>dl", "<cmd>call vimspector#StepOut()<CR>")
 vim.keymap.set("n", "<leader>dj", "<cmd>call vimspector#StepInto()<CR>")
 vim.keymap.set("n", "<leader>dk", "<cmd>call vimspector#StepOver()<CR>")
+

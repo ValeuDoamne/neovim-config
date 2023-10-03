@@ -3,8 +3,15 @@ local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 -- Locally installed jedi-language-server for python completition to work globally
 
+
+local jedi_location = '/usr/bin/jedi-language-server'
+if os.getenv("VIRTUAL_ENV") ~= nil then
+    jedi_location = os.getenv("VIRTUAL_ENV").."/bin/jedi-language-server"
+end
+
+
 lspconfig['jedi_language_server'].setup {
-    cmd = { '/usr/bin/jedi-language-server' },
+    cmd = { jedi_location },
     filetypes = { "python" },
 }
 
@@ -64,7 +71,7 @@ lsp.set_preferences({
     }
 })
 
-lsp.on_attach(function(client, buffnr)
+lsp.on_attach(function(_, buffnr)
 	local opts = {buffer = buffnr, remap = false}
 	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
 	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
