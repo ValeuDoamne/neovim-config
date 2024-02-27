@@ -1,9 +1,7 @@
 return {
-
     { 'nvim-lua/plenary.nvim' },
     {
-		'nvim-telescope/telescope.nvim', tag = '0.1.1',
-		branch = '0.1.x',
+		'nvim-telescope/telescope.nvim',
 	},
 	{ 'rose-pine/neovim', name = 'rose-pine'},
 
@@ -29,13 +27,13 @@ return {
 	'hrsh7th/nvim-cmp',
 	'hrsh7th/cmp-nvim-lsp',
 	'hrsh7th/cmp-path',
-	 'nvim-tree/nvim-web-devicons',
+	'nvim-tree/nvim-web-devicons',
 	'nvim-lualine/lualine.nvim',
 	"nvim-lua/lsp-status.nvim",
 	{ "catppuccin/nvim", name = "catppuccin" },
 	{'nvim-tree/nvim-tree.lua', dependencies= { 'nvim-tree/nvim-web-devicons' } },
     -- Debugger
-    { "puremourning/vimspector", build = "python install_gadgets.py --all"},
+    { "puremourning/vimspector", build = "python install_gadget.py --all"},
     -- Rust tools
     'simrat39/rust-tools.nvim',
     {
@@ -52,15 +50,20 @@ return {
         vim.o.timeout = true
         vim.o.timeoutlen = 300
       end,
-      opts = {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
     },
 
     {
         'saecki/crates.nvim',
         tag = 'v0.3.0',
+    },
+    -- Dart Stuff 
+    'dart-lang/dart-vim-plugin',
+    {
+        'akinsho/flutter-tools.nvim',
+        lazy = false,
+        dependencies = {
+            'stevearc/dressing.nvim', -- optional for vim.ui.select
+        },
+        config = true,
     }
 }

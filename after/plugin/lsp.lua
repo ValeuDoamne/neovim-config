@@ -3,7 +3,6 @@ local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 -- Locally installed jedi-language-server for python completition to work globally
 
-
 local jedi_location = '/usr/bin/jedi-language-server'
 if os.getenv("VIRTUAL_ENV") ~= nil then
     jedi_location = os.getenv("VIRTUAL_ENV").."/bin/jedi-language-server"
@@ -31,6 +30,36 @@ lspconfig.ccls.setup {
     -- ccls does not support sending a null root directory
     single_file_support = false,
   },
+}
+
+local js_root_files = {
+    'mod.js'
+}
+
+lspconfig.denols.setup {
+    default_config = {
+        cmd = { '/usr/bin/deno', 'lsp' },
+        filetypes = {'js', 'ts'},
+        root_dir = function(fname)
+          return util.root_pattern(unpack(js_root_files))(fname) or util.find_git_ancestor(fname)
+        end,
+        offset_encoding = 'utf-32'
+    }
+}
+
+local dart_root_files = {
+    '.mod.dart'
+}
+
+lspconfig.dartls.setup {
+    default_config = {
+        cmd = { '/usr/bin/dart', 'language-server'},
+        filetypes = { 'dart' },
+        root_dir = function(fname)
+          return util.root_pattern(unpack(dart_root_files))(fname) or util.find_git_ancestor(fname)
+        end,
+        offset_encoding = 'utf-32',
+    }
 }
 
 lsp.preset("recommended")
