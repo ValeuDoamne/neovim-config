@@ -30,8 +30,8 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
--- Nvim Tree
-vim.keymap.set("n", "<leader>t", "<cmd>NvimTreeToggle<CR>")
+-- Oil Nvim 
+vim.keymap.set("n", "<leader>t", "<cmd>Oil<CR>")
 
 -- Vimspector
 vim.keymap.set("n", "<F6>", "<cmd>call vimspector#Launch()<CR>")

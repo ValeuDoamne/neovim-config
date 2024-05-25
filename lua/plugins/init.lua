@@ -18,6 +18,7 @@ return {
 
     {
         'numToStr/Comment.nvim',
+        opts = {},
         lazy = false,
     },
     {
@@ -42,9 +43,23 @@ return {
     },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     {
-      "lervag/vimtex",
-       init = function()
-         -- Use init for configuration, don't use the more common "config".
-       end
+        "lervag/vimtex",
+        init = function()
+            vim.g.vimtex_compiler_latexmk = {
+                options = {
+                    '-verbose',
+                    '-file-line-error',
+                    '-synctex=1',
+                    '-interaction=nonstopmode',
+                    '-shell-escape',
+                }
+            }
+        end
+    },
+    {
+        'stevearc/oil.nvim',
+        opts = {},
+        dependencies = { "nvim-tree/nvim-web-devicons" },
     }
+
 }
