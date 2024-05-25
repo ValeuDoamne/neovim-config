@@ -31,7 +31,7 @@ vim.keymap.set("n", "<leader><leader>", function()
 end)
 
 -- Oil Nvim 
-vim.keymap.set("n", "<leader>t", "<cmd>Oil<CR>")
+vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
 
 -- Vimspector
 vim.keymap.set("n", "<F6>", "<cmd>call vimspector#Launch()<CR>")
