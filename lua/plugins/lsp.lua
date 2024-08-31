@@ -10,7 +10,7 @@ local function setup_ccls(lspconfig, util)
         cmd = { '/usr/bin/ccls' },
         filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
         root_dir = function(fname)
-          return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+          return util.root_pattern(table.unpack(root_files))(fname) or util.find_git_ancestor(fname)
         end,
         offset_encoding = 'utf-32',
         -- ccls does not support sending a null root directory
@@ -41,7 +41,7 @@ local function setup_dart(lspconfig, util)
             cmd = { 'dart', 'language-server'},
             filetypes = { 'dart' },
             root_dir = function(fname)
-              return util.root_pattern(unpack(dart_root_files))(fname) or util.find_git_ancestor(fname)
+              return util.root_pattern(table.unpack(dart_root_files))(fname) or util.find_git_ancestor(fname)
             end,
             offset_encoding = 'utf-32',
         }
@@ -52,42 +52,21 @@ local function configure()
     local lsp = require("lsp-zero")
     local lspconfig = require("lspconfig")
     local util = require("lspconfig.util")
+    local mason = require('mason')
+    local mason_lspconfig = require('mason-lspconfig')
+
 
     -- Setup locally installed LSPs 
     setup_ccls(lspconfig, util)
     setup_dart(lspconfig, util)
     setup_jedi(lspconfig)
 
-    lsp.preset("recommended")
-
-    lsp.ensure_installed({
-        'lua_ls',
-        'rust_analyzer',
-    })
-
-    lsp.nvim_workspace()
-
-
     local cmp = require('cmp')
     local cmp_select = {behavior = cmp.SelectBehavior.Select}
-    local cmp_mappings = lsp.defaults.cmp_mappings({
-      ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-      ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-      ["<C-Space>"] = cmp.mapping.complete(),
-    })
 
-    cmp_mappings['<Tab>'] = nil
-    cmp_mappings['<S-Tab>'] = nil
-
-
-    lsp.setup_nvim_cmp({
-        mapping = cmp_mappings
-    })
-
-    lsp.set_preferences({
+    lsp.ui({
         suggest_lsp_servers = false,
+        float_border = 'rounded',
         sign_icons = {
             error = 'E',
             warn  = 'W',
@@ -114,15 +93,43 @@ local function configure()
 
     lsp.setup()
 
-
     vim.diagnostic.config({
         virtual_text = true
+    })
+
+    vim.lsp.inlay_hint.enable(true)
+
+    mason.setup({})
+    mason_lspconfig.setup({
+        ensure_installed = { 'lua_ls' },
+        handlers = {
+            function(server_name)
+                require('lspconfig')[server_name].setup({})
+            end,
+            jedi_language_server = lsp.noop,
+            rust_analyzer = lsp.noop,
+        },
+    })
+
+    cmp.setup({
+        sources = {
+            { name = 'nvim_lsp' },
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+          ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ['<Tab>'] = nil,
+          ['<S-Tab>'] = nil,
+        })
     })
 end
 
 return 	{
 		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v2.x',
+		branch = 'v4.x',
 		dependencies = {
 			{'neovim/nvim-lspconfig'},
 			{
@@ -130,6 +137,9 @@ return 	{
 				build = function()
 					pcall(vim.cmd, 'MasonUpdate')
 				end,
+                setup = {
+                    ensure_installed = { 'lua_ls' },
+                },
 			},
 			{'williamboman/mason-lspconfig.nvim'},
 			{'L3MON4D3/LuaSnip'},

@@ -7,7 +7,7 @@ return {
     { 'tpope/vim-fugitive', config = function() vim.keymap.set("n", "<leader>gs", vim.cmd.Git) end,},
 
     'jose-elias-alvarez/null-ls.nvim',
-	'hrsh7th/nvim-cmp',
+    { 'hrsh7th/nvim-cmp', as = "cmp" },
 	'hrsh7th/cmp-nvim-lsp',
 	'hrsh7th/cmp-path',
 	'nvim-tree/nvim-web-devicons',
@@ -60,6 +60,5 @@ return {
         'stevearc/oil.nvim',
         opts = {},
         dependencies = { "nvim-tree/nvim-web-devicons" },
-    }
-
+    },
 }
