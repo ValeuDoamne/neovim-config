@@ -2,14 +2,12 @@ local function configure()
     local conf =  {
         smart_insert = true,
         insert_closing_quote = true,
-        avoid_prerelease = true,
         autoload = true,
         autoupdate = true,
         loading_indicator = true,
         date_format = "%Y-%m-%d",
         thousands_separator = ".",
         notification_title = "Crates",
-        disable_invalid_feature_diagnostic = false,
         text = {
             loading = "   Loading",
             version = "   %s",
@@ -122,7 +120,7 @@ local function configure()
                 jump_back = { "<c-o>", "<C-RightMouse>" },
             },
         },
-        src = {
+        completion = {
             insert_closing_quote = true,
             text = {
                 prerelease = "  pre-release ",
