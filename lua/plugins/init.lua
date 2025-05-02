@@ -6,12 +6,12 @@ return {
 
     { 'tpope/vim-fugitive', config = function() vim.keymap.set("n", "<leader>gs", vim.cmd.Git) end,},
 
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     { 'hrsh7th/nvim-cmp', as = "cmp" },
 	'hrsh7th/cmp-nvim-lsp',
 	'hrsh7th/cmp-path',
 	'nvim-tree/nvim-web-devicons',
-	"nvim-lua/lsp-status.nvim",
+    { 'linrongbin16/lsp-progress.nvim', config = function () require('lsp-progress').setup() end },
 	{ "catppuccin/nvim", name = "catppuccin-mocha" },
     -- Debugger
     { "puremourning/vimspector", build = "python install_gadget.py --all"},
@@ -61,4 +61,8 @@ return {
         opts = {},
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
+    {
+        'nvim-java/nvim-java',
+        opts = {},
+    }
 }

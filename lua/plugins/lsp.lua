@@ -7,8 +7,8 @@ local function setup_ccls(lspconfig, util)
 
     lspconfig.ccls.setup {
       default_config = {
-        cmd = { '/usr/bin/ccls' },
-        filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+        cmd = { 'ccls' },
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'y' },
         root_dir = function(fname)
           return util.root_pattern(table.unpack(root_files))(fname) or util.find_git_ancestor(fname)
         end,
@@ -20,13 +20,13 @@ local function setup_ccls(lspconfig, util)
 end
 
 local function setup_jedi(lspconfig)
-    local jedi_location = '/usr/bin/jedi-language-server'
+    local jedi_cmd = 'jedi-language-server'
     if os.getenv("VIRTUAL_ENV") ~= nil then
-        jedi_location = os.getenv("VIRTUAL_ENV").."/bin/jedi-language-server"
+        jedi_cmd = os.getenv("VIRTUAL_ENV").."/bin/jedi-language-server"
     end
 
     lspconfig['jedi_language_server'].setup {
-        cmd = { jedi_location },
+        cmd = { jedi_cmd },
         filetypes = { "python" },
     }
 end
@@ -48,6 +48,10 @@ local function setup_dart(lspconfig, util)
     }
 end
 
+local function setup_java(lspconfig)
+    lspconfig.jdtls.setup({})
+end
+
 local function configure()
     local lsp = require("lsp-zero")
     local lspconfig = require("lspconfig")
@@ -55,11 +59,11 @@ local function configure()
     local mason = require('mason')
     local mason_lspconfig = require('mason-lspconfig')
 
-
     -- Setup locally installed LSPs 
     setup_ccls(lspconfig, util)
     setup_dart(lspconfig, util)
     setup_jedi(lspconfig)
+    setup_java(lspconfig)
 
     local cmp = require('cmp')
     local cmp_select = {behavior = cmp.SelectBehavior.Select}
